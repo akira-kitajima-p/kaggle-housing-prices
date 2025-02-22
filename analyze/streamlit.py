@@ -17,7 +17,7 @@ if uploaded_file is not None:
     # ==========================
     #  カラム選択
     # ==========================
-    all_cols = df.columns
+    all_cols = sorted(df.columns)
 
     x_col = st.selectbox("X軸のカラム", all_cols)
     y_col = st.selectbox("Y軸のカラム", all_cols)
