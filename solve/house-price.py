@@ -4,6 +4,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from pretreatment import fill_nan, firstIdea, str2code
 from pretreatment import drop_str
+from predict import train_predict
 
 train = pd.read_csv('../datas/train.csv')
 test = pd.read_csv('../datas/test.csv')
@@ -29,10 +30,6 @@ X_test = test.drop('SalePrice', axis=1)
 
 # 学習
 # clf = LogisticRegression(penalty='l2', solver="sag", random_state=0, max_iter=5000)
-clf = RandomForestClassifier(n_estimators=100, max_depth=2, random_state=0)
-print("set clf")
-clf.fit(X_train, y_train)
-print("fit()")
-pred['SalePrice'] = clf.predict(X_test)
+pred['SalePrice'] = train_predict(X_train, y_train, X_test, "lgbm")
 
-pred.to_csv('sample_out.csv', index=False)
+pred.to_csv('lgbm_sample_out.csv', index=False)
