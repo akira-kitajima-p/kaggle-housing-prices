@@ -83,3 +83,20 @@ def fill_nan(data: pd.DataFrame) -> pd.DataFrame:
 
 def drop_str(data: pd.DataFrame) -> pd.DataFrame:
     return data.select_dtypes(exclude=['object'])
+
+def firstIdea(data: pd.DataFrame):
+    df_num = data.select_dtypes(include=['float64', 'int64'])
+    # 'SalePrice'とその他の項目の相関係数を計算
+    correlation_matrix = df_num.corr()
+    # 'SalePrice'との相関係数を抽出
+    saleprice_correlation = correlation_matrix['SalePrice'].sort_values(ascending=False)
+
+    # 絶対値が0.50以上のカラムを取得（SalePrice自体は含める）
+    high_correlation_features = saleprice_correlation[abs(saleprice_correlation) >= 0.50].index
+
+    # 元のデータから該当するカラムのみを抽出
+    filtered_data = data[high_correlation_features]
+
+    print(filtered_data.columns)
+    return filtered_data
+    
