@@ -16,11 +16,24 @@
 - 使えそうな人たち
   - OverallQual
     - YearRemodAddとの相関が強いのでYearRemodAddがあれば要らない可能性ありけり
-  - OverallCond
-    - Qualの方がいいかも
+  - GrLivArea
+    - GarageCars, GarageAreaと合わせて価格との相関係数が高い。どれか一個高ければ他も高くなる気もする。
+  - TotalBsmtSF
   - YearBuilt
   - YearRemodAdd
     - Builtよりいいかも
   - PoolQc, GarageQual, Fence
     - Exが特に強い
     - この3つはYearRemodAddとの相関も特にないので結構ユニークなのかも
+  - Functional
+    - Type以外のデータ数が少ないが、Typの平均値が高いのは間違いない
+    - Typ(問題無し)とそれ以外くらいの分け方はしたほうがよさそう
+  - MSSubClass
+    - 値によって価値にかなり違いがありそうなので、カテゴリカル変数にしておきたい
+  - MSZoning
+    - カテゴリ化はしたい
+  - NeighborHood
+    - 地域名、24種？くらいしかないが平均に大きな差があるので絶対にカテゴリ化すべき
+  - Foundation
+    - 工事方法。平均値の差が大きいのでカテゴリ化の価値はありそう
+    - 建築年代別に流行がありそうな気もしたけど、グラフ化するとそんなことなかった

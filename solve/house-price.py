@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
-from pretreatment import fill_nan, firstIdea, str2code
+from pretreatment import fill_nan, firstIdea, secondIdea, secondIdeaCategory, str2code, thirdIdea
 from pretreatment import drop_str
 from predict import train_predict
 
@@ -13,11 +13,8 @@ pred = pd.read_csv('../datas/sample_submission.csv')
 # 学習データと訓練データを結合する(特徴量エンジニアリングの為)
 data = pd.concat([train, test], sort=False)
 
-data = str2code(data)
-data = drop_str(data)
-data = fill_nan(data)
-
-data = firstIdea(data)
+# 特徴量エンジニアリング
+data = thirdIdea(data)
 
 # 訓練データとテストデータを前処理を行ったデータに置き換える
 train = data[:len(train)]
@@ -30,6 +27,6 @@ X_test = test.drop('SalePrice', axis=1)
 
 # 学習
 # clf = LogisticRegression(penalty='l2', solver="sag", random_state=0, max_iter=5000)
-pred['SalePrice'] = train_predict(X_train, y_train, X_test, "lgbm")
+pred['SalePrice'] = train_predict(X_train, y_train, X_test, "lgbm", categorical_features=secondIdeaCategory())
 
-pred.to_csv('lgbm_sample_out.csv', index=False)
+pred.to_csv('lgbm_third.csv', index=False)

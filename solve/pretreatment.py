@@ -1,3 +1,4 @@
+from matplotlib import category
 import numpy as np
 import pandas as pd
 
@@ -100,3 +101,28 @@ def firstIdea(data: pd.DataFrame):
     print(filtered_data.columns)
     return filtered_data
     
+def secondIdea(data: pd.DataFrame)-> pd.DataFrame:
+    use_columns = ['SalePrice', 'OverallQual', 'YearRemodAdd', 'GrLivArea', 'TotalBsmtSF', 
+                   'GarageCars', 'PoolQC', 'GarageQual', 'Fence', 'Functional',
+                   'MSSubClass', 'MSZoning', 'Neighborhood', 'Foundation']
+    
+    data = data[use_columns]
+
+    return data
+
+def secondIdeaCategory():
+    return ['Functional', 'MSSubClass', 'MSZoning', 'Neighborhood', 'Foundation', 'PoolQC', 'GarageQual', 'Fence']
+
+def thirdIdea(data: pd.DataFrame)-> pd.DataFrame:
+    df_num = data.select_dtypes(include=['float64', 'int64'])
+    # 'SalePrice'とその他の項目の相関係数を計算
+    correlation_matrix = df_num.corr()
+    # 'SalePrice'との相関係数を抽出
+    saleprice_correlation = correlation_matrix['SalePrice'].sort_values(ascending=False)
+    # 絶対値が0.50以上のカラムを取得（SalePrice自体は含める）
+    high_correlation_features = saleprice_correlation[abs(saleprice_correlation) >= 0.50].index
+    # カテゴリにしたい人達
+    categorcal_cols = secondIdeaCategory()
+    use_colmns = pd.Index(high_correlation_features.to_list() + categorcal_cols)
+
+    return data[use_colmns]
